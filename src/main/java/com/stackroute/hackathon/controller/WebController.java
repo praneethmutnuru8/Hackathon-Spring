@@ -33,10 +33,10 @@ public class WebController {
 	private UserService userService;
 	
 	@RequestMapping(value="{userId}",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
-    public User getUser(@PathVariable String userId) {
+    public ResponseEntity<String> getUser(@PathVariable String userId) {
 		
 		User users = userService.getUserService(userId);
-        return users;
+		return new ResponseEntity<String>("User Found",HttpStatus.OK);
     }
 	@RequestMapping(method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
     public List<User> getAllUser() {
@@ -47,19 +47,19 @@ public class WebController {
 	
 	
 	@RequestMapping(value="{userId}",method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> addArticles(@PathVariable String userId,@RequestBody User user) {
-		return userService.addArticlesService(userId,user);
+    public ResponseEntity<String> addUser(@PathVariable String userId,@RequestBody User user) {
+		return userService.addUserService(userId,user);
     }
 	
 	@RequestMapping(value="{userId}",method = RequestMethod.PUT,consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> updateArticles(@PathVariable String userId,@RequestBody User user) {
-		return userService.updateArticlesService(userId,user);
+    public ResponseEntity<String> updateUser(@PathVariable String userId,@RequestBody User user) {
+		return userService.updateUserService(userId,user);
 		
     }
 	
 	@RequestMapping(value="{userId}",method = RequestMethod.DELETE)
-    public ResponseEntity<String> deleteArticle( @PathVariable String userId) {
-        return  userService.deleteArticleService(userId);
+    public ResponseEntity<String> deleteUser( @PathVariable String userId) {
+        return  userService.deleteUserService(userId);
     }
 
 }
