@@ -1,4 +1,4 @@
-package com.stackroute.movies;
+package com.stackroute.hackathon;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

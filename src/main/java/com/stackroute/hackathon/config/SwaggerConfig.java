@@ -19,8 +19,8 @@ public class SwaggerConfig {
     
    public Docket Api() {
         return new Docket(DocumentationType.SWAGGER_2)
-                .select()                 .apis(RequestHandlerSelectors.basePackage("com.stackroute.news"))
-                .paths(PathSelectors.regex("/news.*"))
+                .select()                 .apis(RequestHandlerSelectors.basePackage("com.stackroute.hackathon"))
+                .paths(PathSelectors.regex("/hackathon.*"))
                 .build();
             
     }

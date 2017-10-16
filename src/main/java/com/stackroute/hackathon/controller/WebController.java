@@ -28,54 +28,38 @@ import org.springframework.http.MediaType;
 @RequestMapping("/hackathon/")
 public class WebController {
 	
+	
 	@Autowired
-	private UserDAO userDAO;
+	private UserService userService;
 	
 	@RequestMapping(value="{userId}",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
     public User getUser(@PathVariable String userId) {
 		
-		User users = userDAO.findByuserId(userId);
+		User users = userService.getUserService(userId);
         return users;
     }
 	@RequestMapping(method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
     public List<User> getAllUser() {
 		
-		List<User> users = userDAO.findAll();
+		List<User> users = userService.getAllUserService();
         return users;
     }
 	
 	
 	@RequestMapping(value="{userId}",method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> addArticles(@PathVariable String userId,@RequestBody User user) {
-		User user1 = userDAO.findByuserId(userId);
-		if(user1==null) {
-		boolean flag = userDAO.save(user) != null;
-        if (flag == false) {
-	    return new ResponseEntity<String>("userid alreday not created",HttpStatus.CONFLICT);
-        }
-        
-        return new ResponseEntity<String>( "userid created",HttpStatus.CREATED);}
-		else {
-			return new ResponseEntity<String>("userid alreday exsists",HttpStatus.CONFLICT);
-		}
+		return userService.addArticlesService(userId,user);
     }
 	
 	@RequestMapping(value="{userId}",method = RequestMethod.PUT,consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> updateArticles(@PathVariable String userId,@RequestBody User user) {
+		return userService.updateArticlesService(userId,user);
 		
-		boolean flag = userDAO.save(user) != null;
-        if (flag == false) {
-	    return new ResponseEntity<String>("userid not updated",HttpStatus.CONFLICT);
-        }
-        
-        return new ResponseEntity<String>( "userid updated",HttpStatus.CREATED);
     }
 	
 	@RequestMapping(value="{userId}",method = RequestMethod.DELETE)
     public ResponseEntity<String> deleteArticle( @PathVariable String userId) {
-		User user= userDAO.findByuserId(userId);
-		userDAO.delete(user);
-		return new ResponseEntity<String>("userid deleted",HttpStatus.NO_CONTENT);
+        return  userService.deleteArticleService(userId);
     }
 
 }
